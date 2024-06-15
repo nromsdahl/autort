@@ -1,7 +1,14 @@
 # Define variables
 $repoUrl = "https://github.com/redcanaryco/atomic-red-team.git"
 $repoDirectory = "C:\AtomicRedTeam"  # Change this to your desired directory
-$testListDirectory = "C:\AtomicTests"  # Directory where your test lists are stored
+
+# Example list of Atomic tests to run (replace with actual test names)
+$testList = @(
+    "T1003.001",
+    "T1003.002",
+    "T1059.001",
+    "T1218.010"
+)
 
 # Function to clone the Atomic Red Team repository
 function Clone-AtomicRedTeamRepository {
@@ -18,22 +25,17 @@ function Import-AtomicRedTeamModule {
 # Function to run Atomic tests from a specified list
 function Run-AtomicTests {
     param(
-        [string]$testListFile
+        [string]$testName
     )
 
-    Write-Output "Running Atomic tests listed in $testListFile..."
+    Write-Output "Running Atomic test: $testName"
 
-    # Read the test list file
-    $tests = Get-Content $testListFile
-
-    foreach ($test in $tests) {
-        try {
-            Invoke-AtomicTest -Path "$repoDirectory\atomics\$test"
-            Write-Output "Successfully ran test: $test"
-        }
-        catch {
-            Write-Error "Failed to run test: $test. $_"
-        }
+    try {
+        Invoke-AtomicTest -Path "$repoDirectory\atomics\$testName"
+        Write-Output "Successfully ran test: $testName"
+    }
+    catch {
+        Write-Error "Failed to run test: $testName. $_"
     }
 }
 
@@ -45,10 +47,7 @@ Clone-AtomicRedTeamRepository
 # Step 2: Import Invoke-AtomicRedTeam module
 Import-AtomicRedTeamModule
 
-# Step 3: Get list of test files from specified directory
-$testLists = Get-ChildItem $testListDirectory -Filter "*.yaml" | Select-Object -ExpandProperty FullName
-
-# Step 4: Run tests from each test list file
-foreach ($testList in $testLists) {
-    Run-AtomicTests -testListFile $testList
+# Step 3: Run tests from the predefined list
+foreach ($test in $testList) {
+    Run-AtomicTests -testName $test
 }
