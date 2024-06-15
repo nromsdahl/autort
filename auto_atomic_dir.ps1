@@ -1,7 +1,7 @@
 # Define variables
 $repoUrl = "https://github.com/redcanaryco/atomic-red-team.git"
-$repoDirectory = "$pwd:\AtomicRedTeam"  # Change this to your desired directory
-$testListDirectory = "$pwd:\AtomicTests"  # Directory where your test lists are stored
+$repoDirectory = "$pwd\AtomicRedTeam"  # Change this to your desired directory
+$testListDirectory = "$pwd\AtomicTests"  # Directory where your test lists are stored
 
 # Function to clone the Atomic Red Team repository
 function Clone-AtomicRedTeamRepository {
