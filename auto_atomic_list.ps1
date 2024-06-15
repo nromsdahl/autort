@@ -1,6 +1,6 @@
 # Define variables
 $repoUrl = "https://github.com/redcanaryco/atomic-red-team.git"
-$repoDirectory = "C:\AtomicRedTeam"  # Change this to your desired directory
+$repoDirectory = "$pwd:\AtomicRedTeam"  # Change this to your desired directory
 
 # Example list of Atomic tests to run (replace with actual test names)
 $testList = @(
